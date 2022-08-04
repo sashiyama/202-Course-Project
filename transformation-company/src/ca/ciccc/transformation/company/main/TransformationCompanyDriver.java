@@ -70,6 +70,8 @@ public class TransformationCompanyDriver {
         }
 
         startGame(deceptions, autobots);
+
+        in.close();
     }
 
     private static void startGame(ArrayList<Transformer> deceptions, ArrayList<Transformer> autobots) {

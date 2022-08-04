@@ -34,5 +34,7 @@ public class CastleCompanyDriver {
             System.out.print(": ");
             System.out.println(castleNumberCalculator.getNumberOfCastles());
         }
+
+        in.close();
     }
 }
