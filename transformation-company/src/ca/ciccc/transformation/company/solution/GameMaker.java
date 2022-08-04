@@ -115,6 +115,7 @@ public class GameMaker implements IGameMaker {
             }
         }
 
+        if (gameResult.autobotWins.equals(gameResult.deceptionWins)) return gameResult;
         if (gameResult.autobotWins > gameResult.deceptionWins) {
             gameResult.setWinningTeam(Transformer.Allegiance.Autobots);
         } else {

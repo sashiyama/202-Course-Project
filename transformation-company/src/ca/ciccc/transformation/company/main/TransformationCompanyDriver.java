@@ -81,6 +81,11 @@ public class TransformationCompanyDriver {
         System.out.println();
         System.out.printf("The number of battles: %d\n", result.getBattleNum());
 
+        if (result.getWinningTeam() == null) {
+            System.out.println("Draw!");
+            return;
+        }
+
         if (result.getWinningTeam() == Transformer.Allegiance.Autobots) {
             System.out.printf("The winning team: (%s): %s\n", result.getWinningTeam(), result.getSurvivingAutobotNames());
             System.out.printf("The surviving members of the losing team: (%s): %s\n", Transformer.Allegiance.Decepticons, result.getSurvivingDeceptionNames());
