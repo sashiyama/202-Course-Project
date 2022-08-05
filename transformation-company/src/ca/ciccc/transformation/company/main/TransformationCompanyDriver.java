@@ -76,7 +76,7 @@ public class TransformationCompanyDriver {
 
     private static void startGame(ArrayList<Transformer> deceptions, ArrayList<Transformer> autobots) {
         GameMaker gameMaker = new GameMaker(deceptions, autobots);
-        GameMaker.Result result = gameMaker.fight();
+        GameMaker.Result result = gameMaker.fights();
 
         System.out.println();
         System.out.printf("The number of battles: %d\n", result.getBattleNum());

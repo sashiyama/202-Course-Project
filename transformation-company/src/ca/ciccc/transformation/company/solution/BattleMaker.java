@@ -3,10 +3,12 @@ package ca.ciccc.transformation.company.solution;
 import java.util.function.BiPredicate;
 
 public class BattleMaker implements IBattleMaker {
-    private Transformer deception;
+    private Transformer decepticon;
     private Transformer autobot;
+    private BattleRule.BasicRule basicRule;
+    private BattleRule.SpecialRule specialRule;
 
-    public class Result {
+    public static class Result {
         private Transformer winner;
         private Transformer loser;
         private boolean isForcedEnd;
@@ -34,77 +36,23 @@ public class BattleMaker implements IBattleMaker {
         }
     }
 
-    public BattleMaker(Transformer deception, Transformer autobot) {
-        this.deception = deception;
+    public BattleMaker(Transformer decepticon, Transformer autobot) {
+        this.decepticon = decepticon;
         this.autobot = autobot;
+
+        BattleRule battleRule = new BattleRule(this.decepticon, this.autobot);
+        this.basicRule = battleRule.new BasicRule();
+        this.specialRule = battleRule.new SpecialRule();
     }
 
     @Override
     public Result battle() {
-        if (this.autobot.isOptimusPrime() && this.deception.isPredaking()) {
-            return new Result();
+        Result specialRuleResult = this.specialRule.judge();
+
+        if (specialRuleResult != null) {
+            return specialRuleResult;
         }
 
-        if (this.autobot.isOptimusPrime()) {
-            return new Result(this.autobot, this.deception);
-        }
-
-        if (this.deception.isPredaking()) {
-            return new Result(this.deception, this.autobot);
-        }
-
-        if (battleByCourageAndStrength() != null) {
-            return battleByCourageAndStrength();
-        }
-
-        if (battleBySkill() != null) {
-            return battleBySkill();
-        }
-
-        if (battleByOverall() != null) {
-            return battleByOverall();
-        }
-
-        return null;
-    }
-
-    private Result battleByCourageAndStrength() {
-        if (this.deception.getCourage().equals(this.autobot.getCourage())) return null;
-
-        BiPredicate<Transformer, Transformer> isFighterWin = (fighter, opponent) -> (fighter.getCourage() - opponent.getCourage()) >= 4 && (fighter.getStrength() - opponent.getStrength()) >= 3;
-
-        if (isFighterWin.test(this.deception, this.autobot)) {
-            return new Result(this.deception, this.autobot);
-        }
-
-        if (isFighterWin.test(this.autobot, this.deception)) {
-            return new Result(this.autobot, this.deception);
-        }
-
-        return null;
-    }
-
-    private Result battleBySkill() {
-        if (this.deception.getSkill().equals(this.autobot.getSkill())) return null;
-
-        BiPredicate<Transformer, Transformer> isFighterWin = (fighter, opponent) -> (fighter.getSkill() - opponent.getSkill()) >= 3;
-
-        if (isFighterWin.test(this.deception, this.autobot)) {
-            return new Result(this.deception, this.autobot);
-        }
-
-        if (isFighterWin.test(this.autobot, this.deception)) {
-            return new Result(this.autobot, this.deception);
-        }
-
-        return null;
-    }
-
-    private Result battleByOverall() {
-        if (this.deception.getOverall().equals(this.autobot.getOverall())) return null;
-
-        if (this.deception.getOverall() > this.autobot.getOverall()) return new Result(this.deception, this.autobot);
-
-        return new Result(this.autobot, this.deception);
+        return this.basicRule.judge();
     }
 }

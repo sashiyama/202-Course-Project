@@ -83,7 +83,7 @@ public class GameMaker implements IGameMaker {
     }
 
     @Override
-    public Result fight() {
+    public Result fights() {
         Result gameResult = new Result();
         sortTransformersByRank();
 
