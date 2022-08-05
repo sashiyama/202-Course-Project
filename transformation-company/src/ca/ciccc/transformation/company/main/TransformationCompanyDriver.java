@@ -35,13 +35,9 @@ public class TransformationCompanyDriver {
             }
 
             String[] plainFighters = line.split("\\*");
-            // Soundwave,D,8,9,2,6,7,5,6,10*Cliffjumper,D,8,9,2,6,7,5,6,10
-            // ["Soundwave,D,8,9,2,6,7,5,6,10", "Cliffjumper,D,8,9,2,6,7,5,6,10"]
 
             for (String plainFighter : plainFighters) {
                 String[] fighter = plainFighter.split(",");
-                // "Soundwave,D,8,9,2,6,7,5,6,10" -> ["Soundwave","D",8,9,2,6,7,5,6,10]
-
                 if (fighter[1].equals("D")) {
                     Transformer decepticon = new Transformer(
                             fighter[0],
