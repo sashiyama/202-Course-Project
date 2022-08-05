@@ -20,6 +20,7 @@ public class CastleNumberCalculator implements ICastleNumberCalculator {
         if (this.heights.isEmpty()) {
             return 0;
         } else {
+            // You can always build a castle at the start of the array, provided it is non-empty.
             return 1 + this.peakDetector.getNumberOfPeaks() + this.valleyDetector.getNumberOfValleys();
         }
     }
