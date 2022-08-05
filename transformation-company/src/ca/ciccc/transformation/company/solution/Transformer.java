@@ -1,6 +1,21 @@
 package ca.ciccc.transformation.company.solution;
 
 public class Transformer implements ITransformer {
+    public static Transformer createTransformer(String[] fighter, Allegiance allegiance) {
+        return new Transformer(
+                fighter[0],
+                allegiance,
+                Integer.parseInt(fighter[2]),
+                Integer.parseInt(fighter[3]),
+                Integer.parseInt(fighter[4]),
+                Integer.parseInt(fighter[5]),
+                Integer.parseInt(fighter[6]),
+                Integer.parseInt(fighter[7]),
+                Integer.parseInt(fighter[8]),
+                Integer.parseInt(fighter[9])
+        );
+    }
+
     public enum Allegiance {
         Autobots,
         Decepticons
