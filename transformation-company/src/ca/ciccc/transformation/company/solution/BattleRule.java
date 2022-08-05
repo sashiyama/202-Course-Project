@@ -25,6 +25,7 @@ public class BattleRule {
                 return battleByOverall();
             }
 
+            // draw!
             return null;
         }
 

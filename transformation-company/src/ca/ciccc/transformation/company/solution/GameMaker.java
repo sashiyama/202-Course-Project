@@ -2,6 +2,8 @@ package ca.ciccc.transformation.company.solution;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 public class GameMaker implements IGameMaker {
     public class Result {
@@ -67,8 +69,8 @@ public class GameMaker implements IGameMaker {
 
         public ArrayList<String> getSurvivingDecepticonNames() {
             ArrayList<String> names = new ArrayList<>();
-            for (Transformer survivingdecepticon : this.survivingdecepticons) {
-                names.add(survivingdecepticon.getName());
+            for (Transformer survivingDecepticon : this.survivingdecepticons) {
+                names.add(survivingDecepticon.getName());
             }
             return names;
         }
@@ -126,7 +128,9 @@ public class GameMaker implements IGameMaker {
     }
 
     private void sortTransformersByRank() {
-        this.decepticons.sort((a, b) -> a.getRank().compareTo(b.getRank()) * -1);
-        this.autobots.sort((a, b) -> a.getRank().compareTo(b.getRank()) * -1);
+        BiFunction<Transformer, Transformer, Integer> sortByRank = (a, b) -> a.getRank().compareTo(b.getRank()) * -1;
+
+        this.decepticons.sort(sortByRank::apply);
+        this.autobots.sort(sortByRank::apply);
     }
 }
