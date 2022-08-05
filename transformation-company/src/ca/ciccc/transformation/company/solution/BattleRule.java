@@ -29,6 +29,7 @@ public class BattleRule {
         }
 
         private BattleMaker.Result battleByCourageAndStrength() {
+            // draw!
             if (decepticon.getCourage().equals(autobot.getCourage())) return null;
 
             BiPredicate<Transformer, Transformer> isFighterWin = (fighter, opponent) -> (fighter.getCourage() - opponent.getCourage()) >= 4 && (fighter.getStrength() - opponent.getStrength()) >= 3;

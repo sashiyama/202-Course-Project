@@ -13,6 +13,7 @@ public class TransformationCompanyDriver {
         File inputFile = new File("transformers.txt");
         Scanner in;
 
+        // error-handling or exception-handling
         try {
             in = new Scanner(inputFile);
         } catch (FileNotFoundException e) {
@@ -20,25 +21,29 @@ public class TransformationCompanyDriver {
             return;
         }
 
-        ArrayList<Transformer> deceptions = new ArrayList<>();
+        ArrayList<Transformer> decepticons = new ArrayList<>();
         ArrayList<Transformer> autobots = new ArrayList<>();
 
         while (in.hasNextLine()) {
             String line = in.nextLine();
 
             if (line.equals("")) {
-                startGame(deceptions, autobots);
-                deceptions = new ArrayList<>();
+                startGame(decepticons, autobots);
+                decepticons = new ArrayList<>();
                 autobots = new ArrayList<>();
                 continue;
             }
 
             String[] plainFighters = line.split("\\*");
+            // Soundwave,D,8,9,2,6,7,5,6,10*Cliffjumper,D,8,9,2,6,7,5,6,10
+            // ["Soundwave,D,8,9,2,6,7,5,6,10", "Cliffjumper,D,8,9,2,6,7,5,6,10"]
 
             for (String plainFighter : plainFighters) {
                 String[] fighter = plainFighter.split(",");
+                // "Soundwave,D,8,9,2,6,7,5,6,10" -> ["Soundwave","D",8,9,2,6,7,5,6,10]
+
                 if (fighter[1].equals("D")) {
-                    Transformer deception = new Transformer(
+                    Transformer decepticon = new Transformer(
                             fighter[0],
                             Transformer.Allegiance.Decepticons,
                             Integer.parseInt(fighter[2]),
@@ -50,7 +55,7 @@ public class TransformationCompanyDriver {
                             Integer.parseInt(fighter[8]),
                             Integer.parseInt(fighter[9])
                     );
-                    deceptions.add(deception);
+                    decepticons.add(decepticon);
                 } else {
                     Transformer autobot = new Transformer(
                             fighter[0],
@@ -69,13 +74,13 @@ public class TransformationCompanyDriver {
             }
         }
 
-        startGame(deceptions, autobots);
+        startGame(decepticons, autobots);
 
         in.close();
     }
 
-    private static void startGame(ArrayList<Transformer> deceptions, ArrayList<Transformer> autobots) {
-        GameMaker gameMaker = new GameMaker(deceptions, autobots);
+    private static void startGame(ArrayList<Transformer> decepticons, ArrayList<Transformer> autobots) {
+        GameMaker gameMaker = new GameMaker(decepticons, autobots);
         GameMaker.Result result = gameMaker.fights();
 
         System.out.println();
@@ -88,9 +93,9 @@ public class TransformationCompanyDriver {
 
         if (result.getWinningTeam() == Transformer.Allegiance.Autobots) {
             System.out.printf("The winning team: (%s): %s\n", result.getWinningTeam(), result.getSurvivingAutobotNames());
-            System.out.printf("The surviving members of the losing team: (%s): %s\n", Transformer.Allegiance.Decepticons, result.getSurvivingDeceptionNames());
+            System.out.printf("The surviving members of the losing team: (%s): %s\n", Transformer.Allegiance.Decepticons, result.getSurvivingDecepticonNames());
         } else {
-            System.out.printf("The winning team: (%s): %s\n", result.getWinningTeam(), result.getSurvivingDeceptionNames());
+            System.out.printf("The winning team: (%s): %s\n", result.getWinningTeam(), result.getSurvivingDecepticonNames());
             System.out.printf("The surviving members of the losing team: (%s): %s\n", Transformer.Allegiance.Autobots, result.getSurvivingAutobotNames());
         }
     }

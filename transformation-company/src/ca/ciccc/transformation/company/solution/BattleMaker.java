@@ -1,7 +1,5 @@
 package ca.ciccc.transformation.company.solution;
 
-import java.util.function.BiPredicate;
-
 public class BattleMaker implements IBattleMaker {
     private Transformer decepticon;
     private Transformer autobot;

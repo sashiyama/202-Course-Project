@@ -7,17 +7,17 @@ public class GameMaker implements IGameMaker {
     public class Result {
         private Integer battleNum;
         private Integer autobotWins;
-        private Integer deceptionWins;
+        private Integer decepticonWins;
         private ArrayList<Transformer> survivingAutobots;
-        private ArrayList<Transformer> survivingDeceptions;
+        private ArrayList<Transformer> survivingdecepticons;
         private Transformer.Allegiance winningTeam;
 
         public Result() {
             this.battleNum = 0;
             this.autobotWins = 0;
-            this.deceptionWins = 0;
+            this.decepticonWins = 0;
             this.survivingAutobots = new ArrayList<>();
-            this.survivingDeceptions = new ArrayList<>();
+            this.survivingdecepticons = new ArrayList<>();
         }
 
         public void countUpBattleNum() {
@@ -28,21 +28,21 @@ public class GameMaker implements IGameMaker {
             this.autobotWins++;
         }
 
-        public void countUpDeceptionWins() {
-            this.deceptionWins++;
+        public void countUpDecepticonWins() {
+            this.decepticonWins++;
         }
 
         public void addSurvivingAutobot(Transformer autobot) {
             this.survivingAutobots.add(autobot);
         }
 
-        public void addSurvivingDeception(Transformer deception) {
-            this.survivingDeceptions.add(deception);
+        public void addSurvivingDecepticon(Transformer decepticon) {
+            this.survivingdecepticons.add(decepticon);
         }
 
         public void destroyAllSurvivors() {
             this.survivingAutobots = new ArrayList<>();
-            this.survivingDeceptions = new ArrayList<>();
+            this.survivingdecepticons = new ArrayList<>();
         }
 
         public void setWinningTeam(Transformer.Allegiance allegiance) {
@@ -65,20 +65,20 @@ public class GameMaker implements IGameMaker {
             return names;
         }
 
-        public ArrayList<String> getSurvivingDeceptionNames() {
+        public ArrayList<String> getSurvivingDecepticonNames() {
             ArrayList<String> names = new ArrayList<>();
-            for (Transformer survivingDeception : this.survivingDeceptions) {
-                names.add(survivingDeception.getName());
+            for (Transformer survivingdecepticon : this.survivingdecepticons) {
+                names.add(survivingdecepticon.getName());
             }
             return names;
         }
     }
 
-    private ArrayList<Transformer> deceptions;
+    private ArrayList<Transformer> decepticons;
     private ArrayList<Transformer> autobots;
 
-    public GameMaker(ArrayList<Transformer> deceptions, ArrayList<Transformer> autobots) {
-        this.deceptions = deceptions;
+    public GameMaker(ArrayList<Transformer> decepticons, ArrayList<Transformer> autobots) {
+        this.decepticons = decepticons;
         this.autobots = autobots;
     }
 
@@ -87,9 +87,9 @@ public class GameMaker implements IGameMaker {
         Result gameResult = new Result();
         sortTransformersByRank();
 
-        for (int i = 0; i < Math.max(this.deceptions.size(), this.autobots.size()); i++) {
-            if (this.deceptions.size() > i && this.autobots.size() > i) {
-                BattleMaker battleMaker = new BattleMaker(this.deceptions.get(i), this.autobots.get(i));
+        for (int i = 0; i < Math.max(this.decepticons.size(), this.autobots.size()); i++) {
+            if (this.decepticons.size() > i && this.autobots.size() > i) {
+                BattleMaker battleMaker = new BattleMaker(this.decepticons.get(i), this.autobots.get(i));
                 BattleMaker.Result battleResult = battleMaker.battle();
 
                 gameResult.countUpBattleNum();
@@ -104,19 +104,19 @@ public class GameMaker implements IGameMaker {
                         gameResult.countUpAutobotWins();
                         gameResult.addSurvivingAutobot(battleResult.getWinner());
                     } else {
-                        gameResult.countUpDeceptionWins();
-                        gameResult.addSurvivingDeception(battleResult.getWinner());
+                        gameResult.countUpDecepticonWins();
+                        gameResult.addSurvivingDecepticon(battleResult.getWinner());
                     }
                 }
-            } else if (this.deceptions.size() <= i) {
+            } else if (this.decepticons.size() <= i) {
                 gameResult.addSurvivingAutobot(this.autobots.get(i));
             } else {
-                gameResult.addSurvivingDeception(this.deceptions.get(i));
+                gameResult.addSurvivingDecepticon(this.decepticons.get(i));
             }
         }
 
-        if (gameResult.autobotWins.equals(gameResult.deceptionWins)) return gameResult;
-        if (gameResult.autobotWins > gameResult.deceptionWins) {
+        if (gameResult.autobotWins.equals(gameResult.decepticonWins)) return gameResult;
+        if (gameResult.autobotWins > gameResult.decepticonWins) {
             gameResult.setWinningTeam(Transformer.Allegiance.Autobots);
         } else {
             gameResult.setWinningTeam(Transformer.Allegiance.Decepticons);
@@ -126,7 +126,7 @@ public class GameMaker implements IGameMaker {
     }
 
     private void sortTransformersByRank() {
-        this.deceptions.sort((a, b) -> a.getRank().compareTo(b.getRank()) * -1);
+        this.decepticons.sort((a, b) -> a.getRank().compareTo(b.getRank()) * -1);
         this.autobots.sort((a, b) -> a.getRank().compareTo(b.getRank()) * -1);
     }
 }
